@@ -74,9 +74,6 @@ Run app
 
 ## Screenshots
 
-![App Screenshot](https://github.com/tintran-dev/weather-app/blob/main/screenshots/1.png)
+<img src="https://github.com/tintran-dev/weather-app/blob/main/screenshots/1.png" width="40%" height="40%"/>  <img src="https://github.com/tintran-dev/weather-app/blob/main/screenshots/3.png" width="40%" height="40%"/>  <img src="https://github.com/tintran-dev/weather-app/blob/main/screenshots/2.png" width="40%" height="40%"/>
 
-![App Screenshot](https://github.com/tintran-dev/weather-app/blob/main/screenshots/2.png)
-
-![App Screenshot](https://github.com/tintran-dev/weather-app/blob/main/screenshots/3.png)
 
