@@ -49,136 +49,11 @@ class ForecastScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.bgCardColor,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 200,
-                                  height: 200,
-                                  child: getWeatherIcon(
-                                      items[0].weatherConditionCode!),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      AppString.tommorow,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        // fontWeight: FontWeight.w500,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 12),
-                                      child: Text(
-                                        "${items[0].tempMax?.celsius?.round()} °C",
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 28,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      "${items[0].weatherMain}",
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        // fontWeight: FontWeight.w500,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 24),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  _card(
-                                    Assets.wind.image(),
-                                    items[0].windSpeed.toString(),
-                                    AppString.windSpeed,
-                                  ),
-                                  _card(
-                                    Assets.humidity.image(),
-                                    items[0].humidity == null
-                                        ? ""
-                                        : "${items[0].humidity?.round()}%",
-                                    AppString.humidity,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      _tommorowWidget(items),
                       const SizedBox(
                         height: 24,
                       ),
-                      Table(
-                        columnWidths: const {
-                          0: IntrinsicColumnWidth(),
-                          1: IntrinsicColumnWidth(flex: 0.5),
-                          2: FlexColumnWidth(),
-                          3: IntrinsicColumnWidth(flex: 0.2),
-                          4: IntrinsicColumnWidth(),
-                        },
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: items.map((e) {
-                          return TableRow(children: [
-                            Text(
-                              e.date == null
-                                  ? ""
-                                  : DateFormat().add_E().format(e.date!),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 60,
-                              width: 60,
-                              child: getWeatherIcon(e.weatherConditionCode!),
-                            ),
-                            Text(
-                              e.weatherMain ?? '',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              "${e.temperature?.celsius?.round()}°",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                            Text(
-                              e.humidity == null
-                                  ? ""
-                                  : "${e.humidity?.round()}%",
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ]);
-                        }).toList(),
-                      ),
+                      _tableWeatherNextFiveDays(items),
                     ],
                   ),
                 ),
@@ -187,7 +62,132 @@ class ForecastScreen extends StatelessWidget {
     );
   }
 
-  Column _card(
+  Table _tableWeatherNextFiveDays(List<Weather> items) {
+    return Table(
+      columnWidths: const {
+        0: IntrinsicColumnWidth(),
+        1: IntrinsicColumnWidth(flex: 0.5),
+        2: FlexColumnWidth(),
+        3: IntrinsicColumnWidth(flex: 0.2),
+        4: IntrinsicColumnWidth(),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: items.map((e) {
+        return TableRow(children: [
+          Text(
+            e.date == null ? "" : DateFormat().add_E().format(e.date!),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(
+            height: 60,
+            width: 60,
+            child: getWeatherIcon(e.weatherConditionCode!),
+          ),
+          Text(
+            e.weatherMain ?? '',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            "${e.temperature?.celsius?.round()}°",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            e.humidity == null ? "" : "${e.humidity?.round()}%",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+        ]);
+      }).toList(),
+    );
+  }
+
+  Container _tommorowWidget(List<Weather> items) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.bgCardColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 200,
+                height: 200,
+                child: getWeatherIcon(items[0].weatherConditionCode!),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    AppString.tommorow,
+                    style: TextStyle(
+                      color: Colors.white,
+                      // fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text(
+                      "${items[0].tempMax?.celsius?.round()} °C",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    "${items[0].weatherMain}",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      // fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _miniCard(
+                  Assets.wind.image(),
+                  items[0].windSpeed.toString(),
+                  AppString.windSpeed,
+                ),
+                _miniCard(
+                  Assets.humidity.image(),
+                  items[0].humidity == null
+                      ? ""
+                      : "${items[0].humidity?.round()}%",
+                  AppString.humidity,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Column _miniCard(
     Image image,
     String value,
     String title,
